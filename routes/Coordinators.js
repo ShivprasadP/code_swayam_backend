@@ -7,14 +7,14 @@ router.put("/assign", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404);
     }
 
     user.coordinator_role = req.body.coordinator_role;
     await user.save();
-    res.send(user);
+    res.status(200).json(user);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -22,9 +22,9 @@ router.put("/assign", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const coordinators = await User.find({ coordinator_role: true });
-    res.send(coordinators);
+    res.status(200).json(coordinators);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -33,14 +33,14 @@ router.put("/remove", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404);
     }
 
     user.coordinator_role = undefined;
     await user.save();
-    res.send(user);
+    res.status(200).json(user);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 

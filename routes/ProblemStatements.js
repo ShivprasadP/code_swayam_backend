@@ -19,9 +19,9 @@ router.post("/add", async (req, res) => {
 
   try {
     const savedProblemStatement = await problemStatement.save();
-    res.send(savedProblemStatement);
+    res.status(201).json(savedProblemStatement);
   } catch (error) {
-    res.send(error);
+    res.status(400);
   }
 });
 
@@ -29,9 +29,9 @@ router.post("/add", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const problemStatements = await ProblemStatement.find();
-    res.send(problemStatements);
+    res.status(200).json(problemStatements);
   } catch (error) {
-    res.send(error);
+    res.status(400);
   }
 });
 
@@ -41,9 +41,9 @@ router.get("/:problemStatementId", async (req, res) => {
     const problemStatement = await ProblemStatement.findById(
       req.params.problemStatementId
     );
-    res.send(problemStatement);
+    res.status(200).json(problemStatement);
   } catch (error) {
-    res.send(error);
+    res.status(400);
   }
 });
 
@@ -55,7 +55,7 @@ router.put("/:problemStatementId", async (req, res) => {
     );
 
     if (!updatedProblemStatement) {
-      return res.status(404).send("Problem Statement not found");
+      return res.status(404);
     }
 
     updatedProblemStatement.title = req.body.title;
@@ -70,9 +70,9 @@ router.put("/:problemStatementId", async (req, res) => {
     updatedProblemStatement.rewardPoints = req.body.rewardPoints;
 
     await updatedProblemStatement.save();
-    res.send(updatedProblemStatement);
+    res.status(200).json(updatedProblemStatement);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -84,12 +84,12 @@ router.delete("/:problemStatementId", async (req, res) => {
     );
 
     if (!removedProblemStatement) {
-      return res.status(404).send("Problem Statement not found");
+      return res.status(404);
     }
 
-    res.send(removedProblemStatement);
+    res.status(200).json(removedProblemStatement);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 

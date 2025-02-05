@@ -17,9 +17,9 @@ router.post("/add", async (req, res) => {
       status: req.body.status,
     });
     await event.save();
-    res.status(201).send(event);
+    res.status(201).json(event);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -27,9 +27,9 @@ router.post("/add", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const events = await Event.find();
-    res.send(events);
+    res.status(200).json(events);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -37,9 +37,9 @@ router.get("/", async (req, res) => {
 router.get("/category/:category", async (req, res) => {
   try {
     const events = await Event.find({ category: req.params.category });
-    res.send(events);
+    res.status(200).json(events);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -47,9 +47,9 @@ router.get("/category/:category", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
-    res.send(event);
+    res.status(200).json(event);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -58,7 +58,7 @@ router.put("/update/:id", async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) {
-      return res.status(404).send("Event not found");
+      return res.status(404);
     }
 
     event.title = req.body.title;
@@ -72,9 +72,9 @@ router.put("/update/:id", async (req, res) => {
     event.status = req.body.status;
 
     await event.save();
-    res.send(event);
+    res.status(200).json(event);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -83,12 +83,12 @@ router.delete("/delete/:id", async (req, res) => {
   try {
     const event = await Event.findByIdAndDelete(req.params.id);
     if (!event) {
-      return res.status(404).send("Event not found");
+      return res.status(404);
     }
 
-    res.send(event);
+    res.status(200).json(event);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 

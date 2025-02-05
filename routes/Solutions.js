@@ -8,9 +8,9 @@ router.post("/add", async (req, res) => {
   const newSolution = new Solution(req.body);
   try {
     const savedSolution = await newSolution.save();
-    res.status(200).send(savedSolution);
+    res.status(200).json(savedSolution);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500);
   }
 });
 
@@ -18,9 +18,9 @@ router.post("/add", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const solutions = await Solution.find();
-    res.status(200).send(solutions);
+    res.status(200).json(solutions);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500);
   }
 });
 
@@ -28,9 +28,9 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const solution = await Solution.findById(req.params.id);
-    res.status(200).send(solution);
+    res.status(200).json(solution);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500);
   }
 });
 
@@ -40,9 +40,9 @@ router.get("/problem/:problemStatementId", async (req, res) => {
     const solutions = await Solution.find({
       problemStatementId: req.params.problemStatementId,
     });
-    res.status(200).send(solutions);
+    res.status(200).json(solutions);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500);
   }
 });
 
@@ -55,16 +55,16 @@ router.put("/:email/:problemStatementId", async (req, res) => {
     });
 
     if (!solution) {
-      return res.status(404).send("Solution not found");
+      return res.status(404);
     }
 
     solution.solution = req.body.solution;
     solution.points = req.body.points;
 
     await solution.save();
-    res.status(200).send(solution);
+    res.status(200).json(solution);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -77,12 +77,12 @@ router.delete("/:email/:problemStatementId", async (req, res) => {
     });
 
     if (!solution) {
-      return res.status(404).send("Solution not found");
+      return res.status(404);
     }
 
-    res.status(200).send(solution);
+    res.status(200).json(solution);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -99,9 +99,9 @@ router.get("/points/:problemStatementId", async (req, res) => {
       };
     });
     points.sort((a, b) => b.points - a.points);
-    res.status(200).send(points);
+    res.status(200).json(points);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500);
   }
 });
 
@@ -111,9 +111,7 @@ router.get("/points/student/:email", async (req, res) => {
     const solutions = await Solution.find({ email: req.params.email });
 
     if (!solutions.length) {
-      return res
-        .status(404)
-        .json({ message: "No solutions found for this student" });
+      return res.status(404);
     }
 
     const result = solutions.map((solution) => ({
@@ -123,7 +121,7 @@ router.get("/points/student/:email", async (req, res) => {
 
     res.status(200).json({ email: req.params.email, results: result });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error });
+    res.status(500);
   }
 });
 
@@ -133,9 +131,7 @@ router.get("/points/total/:email", async (req, res) => {
     const solutions = await Solution.find({ email: req.params.email });
 
     if (!solutions.length) {
-      return res
-        .status(404)
-        .json({ message: "No solutions found for this student" });
+      return res.status(404);
     }
 
     const totalPoints = solutions.reduce(
@@ -145,7 +141,7 @@ router.get("/points/total/:email", async (req, res) => {
 
     res.status(200).json({ email: req.params.email, totalPoints });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error });
+    res.status(500);
   }
 });
 

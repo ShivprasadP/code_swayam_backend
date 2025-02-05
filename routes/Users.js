@@ -18,9 +18,9 @@ router.post("/reg/admin", async (req, res) => {
       role: req.body.role,
     });
     await user.save();
-    res.status(201).send(user);
+    res.status(201).json(user);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -42,9 +42,9 @@ router.post("/register/faculty", async (req, res) => {
       faculty_role: req.body.faculty_role,
     });
     await user.save();
-    res.status(201).send(user);
+    res.status(201).json(user);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -66,9 +66,9 @@ router.post("/register/student", async (req, res) => {
       department: req.body.department,
     });
     await user.save();
-    res.status(201).send(user);
+    res.status(201).json(user);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 
@@ -77,16 +77,16 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404);
     }
 
     if (await bcrypt.compare(req.body.password, user.password)) {
-      return res.send(user);
+      return res.status(200).json(user);
     } else {
       return res.send("Login failed");
     }
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400);
   }
 });
 

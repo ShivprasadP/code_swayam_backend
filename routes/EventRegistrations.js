@@ -9,18 +9,18 @@ router.post("/add", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404);
     }
 
     const event = await Event.findById(req.body.eventId);
     if (!event) {
-      return res.status(400).send("Event not found");
+      return res.status(400);
     }
 
     const eventRegistration = await EventRegistration.create(req.body);
-    res.status(200).send(eventRegistration);
+    res.status(201).json(eventRegistration);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
@@ -28,9 +28,9 @@ router.post("/add", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const eventRegistrations = await EventRegistration.find();
-    res.status(200).send(eventRegistrations);
+    res.status(200).json(eventRegistrations);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
@@ -39,14 +39,14 @@ router.put("/update/:id", async (req, res) => {
   try {
     const eventRegistration = await EventRegistration.findById(req.params.id);
     if (!eventRegistration) {
-      return res.status(404).send("Event registration not found");
+      return res.status(404);
     }
 
     eventRegistration.status = req.body.status;
     await eventRegistration.save();
-    res.status(200).send(eventRegistration);
+    res.status(200).json(eventRegistration);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
@@ -56,9 +56,9 @@ router.get("/user/:email", async (req, res) => {
     const eventRegistrations = await EventRegistration.find({
       email: req.params.email,
     });
-    res.status(200).send(eventRegistrations);
+    res.status(200).json(eventRegistrations);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
@@ -68,9 +68,9 @@ router.get("/event/:eventId", async (req, res) => {
     const eventRegistrations = await EventRegistration.find({
       eventId: req.params.eventId,
     });
-    res.status(200).send(eventRegistrations);
+    res.status(200).json(eventRegistrations);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
@@ -78,9 +78,9 @@ router.get("/event/:eventId", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const eventRegistration = await EventRegistration.findById(req.params.id);
-    res.status(200).send(eventRegistration);
+    res.status(200).json(eventRegistration);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
@@ -91,12 +91,12 @@ router.delete("/delete/:id", async (req, res) => {
       req.params.id
     );
     if (!eventRegistration) {
-      return res.status(404).send("Event registration not found");
+      return res.status(404);
     }
 
-    res.status(200).send("Event registration deleted");
+    res.status(200);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500);
   }
 });
 
