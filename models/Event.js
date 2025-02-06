@@ -11,6 +11,9 @@ const eventSchema = new mongoose.Schema({
   category: { type: String, required: true },
   status: { type: Boolean, required: true },
   created_at: { type: Date, default: Date.now },
+  instructor: { type: String },
+  duration: { type: Number },
+  fee: { type: Number },
 });
 
 const Event = mongoose.model("Event", eventSchema);

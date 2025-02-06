@@ -15,6 +15,9 @@ router.post("/add", async (req, res) => {
       contact: req.body.contact,
       category: req.body.category,
       status: req.body.status,
+      instructor: req.body.instructor,
+      duration: req.body.duration,
+      fee: req.body.fee,
     });
     await event.save();
     res.status(201).json(event);
@@ -70,6 +73,9 @@ router.put("/update/:id", async (req, res) => {
     event.contact = req.body.contact;
     event.category = req.body.category;
     event.status = req.body.status;
+    event.instructor = req.body.instructor;
+    event.duration = req.body.duration;
+    event.fee = req.body.fee;
 
     await event.save();
     res.status(200).json(event);
