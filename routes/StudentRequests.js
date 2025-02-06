@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
   const request = new StudentRequest({
     studentId: req.body.studentId,
     eventId: req.body.eventId,
-    message: req.body.message,
   });
 
   try {
@@ -38,9 +37,6 @@ router.patch("/:id", async (req, res) => {
 
     if (req.body.status != null) {
       request.status = req.body.status;
-    }
-    if (req.body.message != null) {
-      request.message = req.body.message;
     }
 
     const updatedRequest = await request.save();
