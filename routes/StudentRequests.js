@@ -12,6 +12,36 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get request whose status is pending
+router.get("/pending", async (req, res) => {
+  try {
+    const requests = await StudentRequest.find({ status: "pending" });
+    res.json(requests);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Get request whose status is approved
+router.get("/approved", async (req, res) => {
+  try {
+    const requests = await StudentRequest.find({ status: "approved" });
+    res.json(requests);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Get request whose status is rejected
+router.get("/rejected", async (req, res) => {
+  try {
+    const requests = await StudentRequest.find({ status: "rejected" });
+    res.json(requests);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Add new request
 router.post("/", async (req, res) => {
   const request = new StudentRequest({
