@@ -76,25 +76,14 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-// Update request status for all students requests
-router.patch("/student/:studentId", async (req, res) => {
+// Update status of all requests as status provided in request body
+router.patch("/", async (req, res) => {
   try {
-    const requests = await StudentRequest.find({
-      studentId: req.params.studentId,
-    });
-    if (!requests) {
-      return res.status(404).json({ message: "Requests not found" });
-    }
-
-    requests.forEach(async (request) => {
-      if (req.body.status != null) {
-        request.status = req.body.status;
-      }
-
-      await request.save();
-    });
-
-    res.json({ message: "Requests updated" });
+    const requests = await StudentRequest.updateMany(
+      {},
+      { $set: { status: req.body.status } }
+    );
+    res.json(requests);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
