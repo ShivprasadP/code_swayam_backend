@@ -37,6 +37,7 @@ app.use("/event-reg", eventRegistrationRouter);
 app.use("/problem-stmt", problemStatementsRouter);
 app.use("/solutions", solutionRouter);
 app.use("/student-requests", studentRequest);
+app.use("/compile", require("./routes/Compiler"));
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
