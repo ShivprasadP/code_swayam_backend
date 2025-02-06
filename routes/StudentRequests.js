@@ -46,6 +46,30 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+// Update request status for all students requests
+router.patch("/student/:studentId", async (req, res) => {
+  try {
+    const requests = await StudentRequest.find({
+      studentId: req.params.studentId,
+    });
+    if (!requests) {
+      return res.status(404).json({ message: "Requests not found" });
+    }
+
+    requests.forEach(async (request) => {
+      if (req.body.status != null) {
+        request.status = req.body.status;
+      }
+
+      await request.save();
+    });
+
+    res.json({ message: "Requests updated" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // Delete request
 router.delete("/:id", async (req, res) => {
   try {
