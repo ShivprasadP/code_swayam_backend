@@ -92,12 +92,11 @@ router.patch("/", async (req, res) => {
 // Delete request
 router.delete("/:id", async (req, res) => {
   try {
-    const request = await StudentRequest.findById(req.params.id);
+    const request = await StudentRequest.findByIdAndDelete(req.params.id);
     if (!request) {
       return res.status(404).json({ message: "Request not found" });
     }
 
-    await request.remove();
     res.json({ message: "Request deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
