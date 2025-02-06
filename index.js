@@ -8,6 +8,7 @@ const eventRouter = require("./routes/Events");
 const eventRegistrationRouter = require("./routes/EventRegistrations");
 const problemStatementsRouter = require("./routes/ProblemStatements");
 const solutionRouter = require("./routes/Solutions");
+const studentRequest = require("./routes/StudentRequests");
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use("/events", eventRouter);
 app.use("/event-reg", eventRegistrationRouter);
 app.use("/problem-stmt", problemStatementsRouter);
 app.use("/solutions", solutionRouter);
+app.use("/student-requests", studentRequest);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
