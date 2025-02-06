@@ -47,6 +47,18 @@ router.get("/:problemStatementId", async (req, res) => {
   }
 });
 
+// Get lanugauges of a specific Problem Statement route
+router.get("/:problemStatementId/languages", async (req, res) => {
+  try {
+    const problemStatement = await ProblemStatement.findById(
+      req.params.problemStatementId
+    );
+    res.status(200).json(problemStatement.languages);
+  } catch (error) {
+    res.status(400);
+  }
+});
+
 // Update Problem Statement route
 router.put("/:problemStatementId", async (req, res) => {
   try {
