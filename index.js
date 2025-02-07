@@ -9,7 +9,7 @@ const eventRegistrationRouter = require("./routes/EventRegistrations");
 const problemStatementsRouter = require("./routes/ProblemStatements");
 const solutionRouter = require("./routes/Solutions");
 const studentRequest = require("./routes/StudentRequests");
-const compileRouter = require("./routes/Compile");
+const compileRouter = require("./routes/Compiler");
 const testCasesRouter = require("./routes/TestCases");
 
 dotenv.config();
