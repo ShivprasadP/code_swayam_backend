@@ -2,8 +2,7 @@ const mongoose = require("mongoose");
 
 const solutionSchema = new mongoose.Schema({
   problemStatementId: { type: String, required: true },
-  email: { type: String, required: true },
-  solution: { type: String, required: true },
+  studentId: { type: String, required: true },
   points: { type: Number, required: true },
 });
 
