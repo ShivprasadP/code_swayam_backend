@@ -122,6 +122,34 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Update user by id
+router.put("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    if (req.body.full_name) user.full_name = req.body.full_name;
+    if (req.body.email) user.email = req.body.email;
+    if (req.body.phone_number) user.phone_number = req.body.phone_number;
+    if (req.body.gender) user.gender = req.body.gender;
+    if (req.body.address) user.address = req.body.address;
+    if (req.body.password)
+      user.password = await bcrypt.hash(req.body.password, 10);
+    if (req.body.role) user.role = req.body.role;
+    if (req.body.class) user.class = req.body.class;
+    if (req.body.div) user.div = req.body.div;
+    if (req.body.department) user.department = req.body.department;
+    if (req.body.designation) user.designation = req.body.designation;
+
+    await user.save();
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).send({ error: "Something went wrong" });
+  }
+});
+
 // Remove user by id
 router.delete("/:id", async (req, res) => {
   try {
