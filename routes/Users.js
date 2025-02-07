@@ -39,7 +39,6 @@ router.post("/register/faculty", async (req, res) => {
       role: req.body.role,
       department: req.body.department,
       designation: req.body.designation,
-      faculty_role: req.body.faculty_role,
     });
     await user.save();
     res.status(201).json(user);
