@@ -103,6 +103,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get user by role
+router.get("/role/:role", async (req, res) => {
+  try {
+    const users = await User.find({ role: req.params.role });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400);
+  }
+});
+
 // Get user by id
 router.get("/:id", async (req, res) => {
   try {
