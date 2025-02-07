@@ -10,3 +10,6 @@ const testCaseSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+const TestCase = mongoose.model("TestCase", testCaseSchema);
+module.exports = TestCase;
