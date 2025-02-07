@@ -32,7 +32,8 @@ router.get("/", async (req, res) => {
   try {
     const solutions = await Solution.find();
     const points = solutions.reduce((acc, solution) => {
-      acc[solution.email] = (acc[solution.email] || 0) + solution.points;
+      acc[solution.studentId] =
+        (acc[solution.studentId] || 0) + solution.points;
       return acc;
     }, {});
     res.status(200).json(points);
