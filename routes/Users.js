@@ -123,4 +123,14 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Remove user by id
+router.delete("/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400);
+  }
+});
+
 module.exports = router;
